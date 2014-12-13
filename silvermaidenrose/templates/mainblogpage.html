@@ -1,0 +1,15 @@
+<html>
+ <body>
+  <hr>
+
+  {% for entry in entrys %}
+    <div class="blogpost">
+      <div class="blogentry-subject">{{entry.subjectbox}}</div>
+      <div class="blogentry-created">{{entry.created}}</div>
+      <pre class="blogentry-body">{{entry.blogpost}}</pre>
+
+    </div>
+  {% endfor %}
+
+ </body>
+</html>
