@@ -1,6 +1,6 @@
 
 form ="""
-<form method="post" action="/">
+<form method="post">
     <h1>Signup</h1>
     <label>
         Username

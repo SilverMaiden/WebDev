@@ -1,6 +1,9 @@
 import webapp2
 import re
+from models import User
 from form import form
+from secure import make_secure_val
+
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -59,9 +62,20 @@ class MainPage(webapp2.RequestHandler):
         def check(form1):
             if (data["username_error"] == "" and
                 data["password_validity_error"] == "" and
-                data["verify_error"] == "" and
-                data["email_error"] == ""):
-                self.redirect('/welcome?username='+username, code=302)
+                data["verify_error"] == ""): #and
+               # data["email_error"] == ""):
+               user = User(username = username,
+                           password = password,
+                           email = email)
+               user.put()
+               user_id = user.key().id()
+               secure_val = make_secure_val(str(user_id))
+               hashed_thing = secure_val.split(',')[0]
+               salt = secure_val.split(',')[1]
+               user.salt = salt
+               user.put()
+               self.response.set_cookie("user_id",str(user_id) + '|' + hashed_thing)
+               self.redirect('/welcome', code=302)
             return form1
         form2 = check(form1)
 
