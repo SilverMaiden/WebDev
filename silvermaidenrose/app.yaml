@@ -10,7 +10,7 @@ handlers:
   upload: favicon\.ico
 
 - url: .*
-  script: blog.app
+  script: main.app
 
 libraries:
 - name: jinja2
