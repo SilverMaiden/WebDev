@@ -10,8 +10,7 @@ class LoginPage(webapp2.RequestHandler):
     def get(self):
         data = {
             "username_value":"",
-            "username_error":"",
-            "password_validity_error":""
+            "login_error":""
                 }
 
         new_form = form % data
@@ -24,8 +23,9 @@ class LoginPage(webapp2.RequestHandler):
         password = self.request.get("password")
         data = {
             "username_value":"",
-            "username_error":"",
-            "password_validity_error":""
+          #  "username_error":"",
+          #  "password_validity_error":"",
+            "login_error": ""
                 }
 
        # new_form = form % data
@@ -37,21 +37,24 @@ class LoginPage(webapp2.RequestHandler):
         password_stuff = q.get()
         #user_password = username_stuff.password
 
-
         def error_check(form):
-            data["username_value"] = username
+            # Assigning username below basically means that if you have
+            #
             if username_stuff is None:
-                data["username_error"] = "Invalid username"
+             #   data["username_error"] = "Invalid username"
+                data["login_error"] = "Invalid login"
+            if username_stuff is not None:
+                data["username_value"] = username
             if password_stuff is None:
-                data["password_validity_error"] = "Invalid password"
+              #  data["password_validity_error"] = "Invalid password"
+                data["login_error"] = "Invalid login"
             return form % data
 
         form_now_checked = error_check(form)
 
 
         def final_check(form_now_checked):
-            if (data["username_error"] == "" and
-                data["password_validity_error"] == ""):
+            if data["login_error"] == "":
                 user_id = username_stuff.key().id()
                 user_key = db.Key.from_path('User', user_id)
                 user_salt = username_stuff.salt
@@ -72,7 +75,8 @@ class LoginPage(webapp2.RequestHandler):
 
 
 
-
+# data["username_error"] == "" and
+        #        data["password_validity_error"] == ""):
 
         #password == password_stuff and
 
