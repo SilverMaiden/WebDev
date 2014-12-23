@@ -38,8 +38,8 @@ class LoginPage(webapp2.RequestHandler):
         #user_password = username_stuff.password
 
         def error_check(form):
-            # Assigning username below basically means that if you have
-            #
+            # Assigning username below basically means that if the username
+            #is in the database, it'll keep it in the form if you get your password incorrect.
             if username_stuff is None:
              #   data["username_error"] = "Invalid username"
                 data["login_error"] = "Invalid login"
